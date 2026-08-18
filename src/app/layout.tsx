@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'Thallium AI 🚀 | O Banco Digital Disruptivo com IA de Ponta ✨',
@@ -14,9 +15,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className="bg-[#090514] text-[#f3f4f6] antialiased selection:bg-purple-500 selection:text-white">
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
 }
-
