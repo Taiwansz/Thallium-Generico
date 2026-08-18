@@ -205,7 +205,7 @@ export default function LandingPage() {
 
               <div className="space-y-2">
                 <div className="text-3xl sm:text-5xl font-black text-cyan-400 font-heading">R$ 500M+</div>
-                <div class="text-xs sm:text-sm font-bold text-gray-300">💎 Lucro Gerado por Robôs</div>
+                <div className="text-xs sm:text-sm font-bold text-gray-300">💎 Lucro Gerado por Robôs</div>
               </div>
 
               <div className="space-y-2">
@@ -332,3 +332,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
