@@ -1,0 +1,34 @@
+{
+  "name": "thallium-generico",
+  "version": "1.0.0",
+  "private": true,
+  "description": "White-label generic digital ledger and banking platform framework powered by Next.js 16, Tailwind CSS v4, and Supabase RPCs",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.49.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.479.0",
+    "next": "15.2.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "tailwind-merge": "^3.0.2"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.51.0",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.2.1",
+    "postcss": "^8",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5"
+  }
+}
