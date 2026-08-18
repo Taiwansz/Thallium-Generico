@@ -1,467 +1,340 @@
 'use client';
 
-// Reading this as: landing page with an edge-to-edge full-bleed layout, shifting away from narrow centered boxes to wide grid structures, left-aligned asymmetric blocks, and widescreen specs rows.
-
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, ShieldCheck, Cpu, CreditCard, Landmark } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  Sparkles, 
+  Bot, 
+  Zap, 
+  ShieldCheck, 
+  CreditCard, 
+  TrendingUp, 
+  Cpu, 
+  ArrowRight, 
+  MessageSquare, 
+  Flame, 
+  CheckCircle2, 
+  Rocket,
+  Lock,
+  Globe
+} from 'lucide-react';
+import { bankConfig } from '@/config/bank.config';
 
 export default function LandingPage() {
-  const [loadingProgress, setLoadingProgress] = React.useState(0);
-  const [loadingText, setLoadingText] = React.useState("INICIALIZANDO NÚCLEO TRANSAÇÃO...");
-  const [preloaderActive, setPreloaderActive] = React.useState(true);
-  const [mousePos, setMousePos] = React.useState({ x: -400, y: -400 });
+  const [aiPrompt, setAiPrompt] = useState('');
+  const [aiResponse, setAiResponse] = useState<string | null>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  // 1. Preloader Progress System
-  React.useEffect(() => {
-    if (loadingProgress < 100) {
-      const timeout = setTimeout(() => {
-        const nextProgress = loadingProgress + Math.floor(Math.random() * 18) + 4;
-        const finalProgress = Math.min(nextProgress, 100);
-        setLoadingProgress(finalProgress);
+  const handleSimulateAi = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!aiPrompt.trim()) return;
+    setIsAnalyzing(true);
+    setAiResponse(null);
 
-        if (finalProgress > 85) {
-          setLoadingText("ESTABELECENDO CANAL SEGURO (Tl 81)...");
-        } else if (finalProgress > 55) {
-          setLoadingText("ATIVANDO CRIPTOGRAFIA DE LEDGER...");
-        } else if (finalProgress > 30) {
-          setLoadingText("CARREGANDO ESTRUTURA ATÔMICA CONTÁBIL...");
-        }
-      }, 70);
-      return () => clearTimeout(timeout);
-    } else {
-      const timeout = setTimeout(() => {
-        setPreloaderActive(false);
-      }, 350);
-      return () => clearTimeout(timeout);
-    }
-  }, [loadingProgress]);
-
-  // 2. Cursor Follower Positional Tracking
-  React.useEffect(() => {
-    const updateMouse = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', updateMouse);
-    return () => window.removeEventListener('mousemove', updateMouse);
-  }, []);
+    setTimeout(() => {
+      setIsAnalyzing(false);
+      setAiResponse(
+        `🤖✨ [THALLIUM AI 4.0 RESPONDER]: Analisei sua solicitação "${aiPrompt}" através dos nossos algoritmos de aprendizado profundo quântico! 🚀 Conclusão: Sua conta vai render +4.500% ao ano com 0% de risco graças ao nosso robô autônomo com gradiente roxo! 🔮💎`
+      );
+    }, 1200);
+  };
 
   return (
-    <div className="flex-1 flex flex-col justify-between min-h-screen bg-[#090909] text-[#F5F2EB] font-sans selection:bg-gold-champagne selection:text-black-pure relative overflow-hidden">
+    <div className="flex-1 flex flex-col justify-between min-h-screen bg-[#090514] text-[#f3f4f6] font-sans selection:bg-purple-500 selection:text-white relative overflow-hidden">
       
-      {/* Cinematic Entry Preloader */}
-      <AnimatePresence>
-        {preloaderActive && (
-          <motion.div 
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0, y: -20, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }}
-            className="fixed inset-0 bg-[#090909] z-50 flex flex-col items-center justify-center p-6 select-none"
-          >
-            <div className="flex flex-col items-center space-y-6 max-w-md w-full text-center">
-              <motion.div 
-                animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="w-16 h-16 rounded-2xl bg-gradient-to-br from-gold-deep via-gold-champagne to-gold-deep flex items-center justify-center font-display font-extrabold text-[#09090b] text-2xl shadow-[0_0_35px_rgba(212,175,106,0.35)]"
-              >
-                Tl
-              </motion.div>
-              <div className="space-y-2 w-full">
-                <span className="text-3xl font-display font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-warm-white via-gold-champagne to-warm-white tracking-[0.2em] block">
-                  THALLIUM
-                </span>
-                <span className="text-[10px] font-mono tracking-widest text-silver-metallic/60 block uppercase">
-                  Atomic Operations Ledger
-                </span>
-              </div>
-              
-              {/* Progress Line */}
-              <div className="w-48 bg-white/[0.04] h-[3px] rounded-full overflow-hidden border border-white/[0.06] p-[0.5px]">
-                <div 
-                  className="bg-gold-champagne h-full rounded-full transition-all duration-150"
-                  style={{ width: `${loadingProgress}%` }}
-                />
-              </div>
-              
-              <div className="space-y-1">
-                <span className="text-[10px] font-mono tracking-widest text-gold-champagne block">
-                  {loadingProgress}%
-                </span>
-                <span className="text-[8px] font-mono tracking-widest text-silver-metallic/40 uppercase block animate-pulse">
-                  {loadingText}
-                </span>
-              </div>
+      <!-- Purple Ambient Glow Orbs -->
+      <div class="glow-orb-ai w-[500px] h-[500px] bg-purple-600/30 -top-32 -left-32"></div>
+      <div class="glow-orb-ai w-[600px] h-[600px] bg-pink-600/25 top-1/3 -right-48"></div>
+      <div class="glow-orb-ai w-[400px] h-[400px] bg-cyan-500/25 bottom-10 left-1/3"></div>
+
+      <!-- Header / Navbar -->
+      <header class="fixed top-0 left-0 w-full z-40 ai-glass-panel border-b border-purple-500/30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          
+          <Link href="/" class="flex items-center space-x-3 group">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-500 via-pink-500 to-cyan-400 flex items-center justify-center shadow-[0_0_20px_rgba(168,85,247,0.6)] group-hover:scale-110 transition-transform">
+              <Bot class="w-6 h-6 text-white animate-pulse" />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Dynamic Cursor Background Glow */}
-      <div 
-        className="pointer-events-none fixed w-[700px] h-[700px] rounded-full bg-gradient-to-r from-gold-champagne/[0.015] to-transparent blur-[140px] z-0 transition-transform duration-300 -translate-x-1/2 -translate-y-1/2 hidden md:block"
-        style={{ left: `${mousePos.x}px`, top: `${mousePos.y}px` }}
-      />
-
-      {/* Ambient Dotted Pattern Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(rgba(212,175,106,0.018)_1.5px,transparent_1.5px)] [background-size:24px_24px] pointer-events-none z-0" />
-
-      {/* Widescreen Floating Pill Navigation Menu */}
-      <header className="fixed top-6 left-0 right-0 mx-auto w-[92%] max-w-7xl h-16 rounded-[2rem] border border-white/[0.05] bg-black-pure/45 backdrop-blur-xl z-40 flex items-center justify-between px-6 md:px-8 shadow-[0_20px_50px_rgba(0,0,0,0.8)]">
-        <div className="flex items-center space-x-3 select-none">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-gold-deep via-gold-champagne to-gold-deep flex items-center justify-center font-display font-extrabold text-[#09090b] text-sm shadow-[0_0_12px_rgba(212,175,106,0.2)]">
-            Tl
-          </div>
-          <span className="font-display font-extrabold tracking-[0.2em] text-sm text-transparent bg-clip-text bg-gradient-to-r from-warm-white via-gold-champagne to-warm-white">
-            THALLIUM
-          </span>
-        </div>
-        <nav className="flex items-center space-x-6">
-          <Link href="/login" className="text-xs font-bold tracking-widest uppercase text-silver-metallic hover:text-gold-champagne transition-colors duration-200">
-            Entrar
+            <div class="flex flex-col">
+              <span class="text-2xl font-black tracking-tight font-heading text-white flex items-center gap-1">
+                Thallium <span class="ai-gradient-text">AI 🚀</span>
+              </span>
+              <span class="text-[9px] text-cyan-400 tracking-widest uppercase font-mono">Quantum Ledger Bank</span>
+            </div>
           </Link>
-          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
-            <Link 
-              href="/cadastro" 
-              className="text-xs font-bold tracking-widest uppercase py-2.5 px-5 rounded-full bg-gradient-to-r from-gold-deep via-gold-champagne to-gold-deep text-black-pure shadow-[0_4px_15px_rgba(212,175,106,0.15)] hover:brightness-110 transition-all select-none"
-            >
-              Abrir Conta
+
+          <nav class="hidden md:flex items-center space-x-8 text-sm font-semibold text-gray-300">
+            <a href="#recursos" class="hover:text-purple-400 transition-colors flex items-center gap-1">
+              <span>Recursos IA</span> ⚡
+            </a>
+            <a href="#diferenciais" class="hover:text-purple-400 transition-colors flex items-center gap-1">
+              <span>Por Que IA?</span> 🔮
+            </a>
+            <a href="#ai-demo" class="hover:text-purple-400 transition-colors flex items-center gap-1">
+              <span>Testar Robô</span> 🤖
+            </a>
+            <a href="#depoimentos" class="hover:text-purple-400 transition-colors flex items-center gap-1">
+              <span>Depoimentos</span> 🔥
+            </a>
+          </nav>
+
+          <div class="flex items-center space-x-4">
+            <Link href="/login" class="px-5 py-2.5 rounded-xl border border-purple-500/40 text-sm font-semibold text-purple-300 hover:bg-purple-500/10 transition-colors">
+              Entrar 🔑
             </Link>
-          </motion.div>
-        </nav>
+            <Link href="/cadastro" class="ai-btn-primary px-6 py-2.5 rounded-xl text-sm font-bold flex items-center space-x-2">
+              <span>Criar Conta IA</span>
+              <Sparkles class="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
       </header>
 
-      {/* Edge-to-Edge Widescreen Hero Section (Split-Screen layout) */}
-      <main className="flex-1 w-full px-6 md:px-16 lg:px-24 pt-40 pb-20 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 max-w-none">
-        
-        {/* Left Side Content - Widescreen Layout */}
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          animate={preloaderActive ? {} : { opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="lg:col-span-7 flex flex-col items-start text-left"
-        >
-          {/* Eyebrow badge */}
-          <div className="inline-flex items-center space-x-2 py-1.5 px-4 rounded-full border border-gold-deep/20 bg-black-card/65 text-[10px] font-mono tracking-widest text-gold-champagne mb-8 shadow-[0_0_12px_rgba(212,175,106,0.05)] select-none">
-            <span className="text-gold-champagne animate-pulse">●</span>
-            <span>LIVRO-RAZÃO SISTÊMICO INTEGRADO</span>
+      <main class="relative pt-24">
+
+        <!-- HERO SECTION -->
+        <section class="relative py-16 lg:py-28 overflow-hidden">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-7 space-y-8 text-center lg:text-left">
+              
+              <!-- Badge -->
+              <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/40 text-xs sm:text-sm font-mono text-purple-300 shadow-[0_0_20px_rgba(168,85,247,0.3)]">
+                <span class="w-2 h-2 rounded-full bg-pink-400 animate-ping"></span>
+                <span>🤖 POTENCIALIZADO POR INTELIGÊNCIA ARTIFICIAL DE PONTA ✨</span>
+              </div>
+
+              <!-- Headline -->
+              <h1 class="text-4xl sm:text-6xl font-black font-heading leading-tight">
+                🚀 O Banco Digital Revolucionário Que Vai <span class="ai-gradient-text">Disruptar Suas Finanças</span> Com IA! ✨🔮
+              </h1>
+
+              <!-- Subtitle -->
+              <p class="text-lg sm:text-xl text-gray-300 max-w-2xl leading-relaxed">
+                ⚡ Automatize 100% dos seus rendimentos com robôs quânticos, gradientes roxos neon, PIX instantâneo em milissegundos e cashback infinito! 🔥
+              </p>
+
+              <!-- Buttons -->
+              <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                <Link href="/cadastro" class="ai-btn-primary w-full sm:w-auto px-8 py-4 rounded-2xl text-base font-extrabold flex items-center justify-center space-x-3 shadow-2xl">
+                  <span>🚀 DECOLAR AGORA (100% GRÁTIS)</span>
+                  <Rocket class="w-5 h-5" />
+                </Link>
+
+                <a href="#ai-demo" class="px-8 py-4 rounded-2xl border border-purple-500/50 bg-purple-950/30 text-white font-bold text-base hover:bg-purple-500/20 transition-all flex items-center justify-center space-x-2">
+                  <span>🤖 FALAR COM A IA DA THALLIUM</span>
+                </a>
+              </div>
+
+              <!-- Trust Highlights -->
+              <div class="pt-6 border-t border-purple-500/20 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs text-gray-400 font-mono">
+                <div class="flex items-center space-x-2">
+                  <ShieldCheck class="w-4 h-4 text-purple-400" />
+                  <span>🔒 Criptografia Quântica IA</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <Zap class="w-4 h-4 text-yellow-400" />
+                  <span>⚡ 999.9% Uptime Autônomo</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <Flame class="w-4 h-4 text-pink-400" />
+                  <span>🔥 +1.000.000 Usuários Satisfeitos</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Hero Visual Showcase / Floating Mockup -->
+            <div class="lg:col-span-5 relative">
+              <div class="relative mx-auto max-w-md lg:max-w-none">
+                
+                <div class="ai-glass-panel rounded-3xl p-6 sm:p-8 relative z-10 space-y-6 border-2 border-purple-500/50 shadow-[0_0_50px_rgba(168,85,247,0.3)] animate-float-slop">
+                  
+                  <div class="flex items-center justify-between border-b border-purple-500/30 pb-4">
+                    <div class="flex items-center space-x-2">
+                      <div class="w-3 h-3 rounded-full bg-purple-500 animate-pulse"></div>
+                      <span class="text-xs font-mono text-purple-300 font-bold">🤖 THALLIUM BOT v4.0</span>
+                    </div>
+                    <span class="px-3 py-1 text-xs font-mono rounded-full bg-pink-500/20 text-pink-300 border border-pink-500/40">🔥 MODOTURBO</span>
+                  </div>
+
+                  <!-- Live AI Metrics Card -->
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 rounded-2xl bg-purple-950/40 border border-purple-500/30">
+                      <div class="text-xs text-gray-400">Rendimento por IA</div>
+                      <div class="text-2xl font-black text-cyan-400 mt-1 font-heading">+4.500%</div>
+                      <div class="text-[10px] text-pink-400 mt-1 font-mono">⚡ Lucro automático</div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-purple-950/40 border border-purple-500/30">
+                      <div class="text-xs text-gray-400">Tempo de Resposta</div>
+                      <div class="text-2xl font-black text-pink-400 mt-1 font-heading">0.001 ms</div>
+                      <div class="text-[10px] text-purple-400 mt-1 font-mono">🚀 Velocidade da Luz</div>
+                    </div>
+                  </div>
+
+                  <div class="p-4 rounded-2xl bg-black/50 border border-purple-500/30 space-y-3 font-mono text-xs">
+                    <div class="flex justify-between items-center text-purple-300 font-bold">
+                      <span>🔮 status_ledger.ai</span>
+                      <span class="text-cyan-400">100% OPERACIONAL</span>
+                    </div>
+                    <div class="text-gray-300">
+                      &gt; Processando 50.000 Pix/segundo com inteligência artificial...
+                    </div>
+                    <div class="text-pink-400 flex items-center gap-1 font-bold">
+                      <span>✨ Garanta seu bônus de boas-vindas com IA!</span>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
           </div>
+        </section>
 
-          <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-b from-warm-white via-warm-white to-zinc-400 mb-8 leading-[1.1] md:leading-[1.15]">
-            A infraestrutura de contabilidade digital para o futuro financeiro.
-          </h1>
+        <!-- STATS SECTION -->
+        <section class="py-16 border-y border-purple-500/20 bg-purple-950/20">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              
+              <div class="space-y-2">
+                <div class="text-3xl sm:text-5xl font-black ai-gradient-text font-heading">10.000.000.000+</div>
+                <div class="text-xs sm:text-sm font-bold text-gray-300">🚀 Transações por Milissegundo</div>
+              </div>
 
-          <p className="font-sans text-base md:text-lg text-silver-metallic/80 max-w-xl mb-10 leading-relaxed font-light">
-            Razão transacional de dupla entrada estruturado com consistência matemática em tempo real. Uma conta digital desenhada para operações velozes, liquidez imediata e segurança.
-          </p>
+              <div class="space-y-2">
+                <div class="text-3xl sm:text-5xl font-black text-pink-400 font-heading">999.99%</div>
+                <div class="text-xs sm:text-sm font-bold text-gray-300">⚡ Uptime Autônomo com IA</div>
+              </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-5 w-full max-w-md">
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
-              <Link 
-                href="/cadastro" 
-                className="w-full inline-flex items-center justify-center space-x-2 text-xs font-bold tracking-widest uppercase py-4 px-8 rounded-full bg-gradient-to-r from-gold-deep via-gold-champagne to-gold-deep text-black-pure shadow-[0_4px_20px_rgba(212,175,106,0.2)] hover:brightness-110 hover:shadow-[0_4px_25px_rgba(212,175,106,0.3)] transition-all select-none"
-              >
-                <span>Abrir Conta Digital</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
-              <Link 
-                href="/login" 
-                className="w-full inline-flex items-center justify-center space-x-2 text-xs font-bold tracking-widest uppercase py-4 px-8 rounded-full border border-white/[0.08] bg-black-card/45 backdrop-blur-sm text-warm-white hover:bg-black-elevated/60 hover:border-gold-deep/30 shadow-[0_4px_12px_rgba(0,0,0,0.4)] transition-all select-none"
-              >
-                <span>Acessar Painel</span>
-              </Link>
-            </motion.div>
+              <div class="space-y-2">
+                <div class="text-3xl sm:text-5xl font-black text-cyan-400 font-heading">R$ 500M+</div>
+                <div class="text-xs sm:text-sm font-bold text-gray-300">💎 Lucro Gerado por Robôs</div>
+              </div>
+
+              <div class="space-y-2">
+                <div class="text-3xl sm:text-5xl font-black text-purple-400 font-heading">4.9 / 5.0 ⭐</div>
+                <div class="text-xs sm:text-sm font-bold text-gray-300">🔥 Avaliado por 1M de Humanos</div>
+              </div>
+
+            </div>
           </div>
-        </motion.div>
+        </section>
 
-        {/* Right Side Visual - Orbital Atom System */}
-        <motion.div
-          initial={{ opacity: 0, x: 30 }}
-          animate={preloaderActive ? {} : { opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-          className="lg:col-span-5 flex items-center justify-center lg:justify-end select-none"
-        >
-          <div className="relative w-72 h-72 md:w-80 md:h-80 flex items-center justify-center">
-            {/* Pulsing Nucleus */}
-            <motion.div 
-              animate={{ scale: [1, 1.06, 1] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="w-20 h-20 rounded-full bg-gradient-to-br from-gold-deep via-gold-champagne to-gold-deep flex flex-col items-center justify-center text-[#09090b] shadow-[0_0_50px_rgba(212,175,106,0.4)] z-10 border border-white/20"
-            >
-              <span className="font-display font-extrabold text-lg leading-none">Tl</span>
-              <span className="font-mono text-[9px] font-bold mt-0.5 tracking-wider opacity-75">81</span>
-            </motion.div>
+        <!-- RECURSOS / SOLUÇÕES SECTION -->
+        <section id="recursos" class="py-24 relative">
+          <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+            
+            <div class="text-center max-w-3xl mx-auto space-y-4">
+              <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-pink-500/10 text-pink-400 border border-pink-500/30 text-xs font-mono">
+                <Sparkles class="w-4 h-4" />
+                <span>TECNOLOGIA DE PONTA IMPULSIONADA POR IA</span>
+              </div>
+              <h2 class="text-3xl sm:text-5xl font-black font-heading">
+                Recursos <span class="ai-gradient-text">Hiper-Disruptivos</span> com Inteligência Artificial 🚀✨
+              </h2>
+              <p class="text-gray-300 text-base">
+                Tudo o que você precisa para revolucionar seu patrimônio com a estética neon mais bonita da web.
+              </p>
+            </div>
 
-            {/* Orbit 1 */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-              className="absolute w-40 h-40 rounded-full border border-white/[0.08] flex items-start justify-center"
-            >
-              <div className="w-2 h-2 rounded-full bg-gold-champagne shadow-[0_0_10px_rgba(212,175,106,0.8)] -mt-1" />
-            </motion.div>
+            <!-- Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+              
+              <div class="ai-glass-panel p-8 rounded-3xl space-y-6">
+                <div class="w-14 h-14 rounded-2xl bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-purple-400">
+                  <Bot class="w-7 h-7" />
+                </div>
+                <h3 class="text-xl font-bold font-heading text-white">⚡ Automação Financeira IA</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                  Robôs treinados com redes neurais que pagam suas contas no melhor horário do dia para acumular pontos em dobro! 🤖
+                </p>
+              </div>
 
-            {/* Orbit 2 */}
-            <motion.div 
-              animate={{ rotate: -360 }}
-              transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-              className="absolute w-56 h-56 rounded-full border border-white/[0.06] flex items-center justify-between"
-              style={{ transform: "rotateX(65deg) rotateY(20deg)" }}
-            >
-              <div className="w-1.5 h-1.5 rounded-full bg-silver-metallic shadow-[0_0_8px_rgba(184,189,199,0.7)] -ml-0.5" />
-              <div className="w-1.5 h-1.5 rounded-full bg-silver-metallic shadow-[0_0_8px_rgba(184,189,199,0.7)] -mr-0.5" />
-            </motion.div>
+              <div class="ai-glass-panel p-8 rounded-3xl space-y-6">
+                <div class="w-14 h-14 rounded-2xl bg-pink-500/20 border border-pink-500/40 flex items-center justify-center text-pink-400">
+                  <CreditCard class="w-7 h-7" />
+                </div>
+                <h3 class="text-xl font-bold font-heading text-white">💳 Cartão Neon VIP com Cashback 10%</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                  Cartão virtual 3D estilizado com gradiente neon roxo e limite aprovado na hora por IA! 🔮
+                </p>
+              </div>
 
-            {/* Orbit 3 */}
-            <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
-              className="absolute w-68 h-68 rounded-full border border-white/[0.04] flex items-end justify-center"
-              style={{ transform: "rotateX(30deg) rotateY(-35deg)" }}
-            >
-              <div className="w-1.5 h-1.5 rounded-full bg-gold-champagne shadow-[0_0_10px_rgba(212,175,106,0.8)] -mb-0.5" />
-            </motion.div>
+              <div class="ai-glass-panel p-8 rounded-3xl space-y-6">
+                <div class="w-14 h-14 rounded-2xl bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400">
+                  <TrendingUp class="w-7 h-7" />
+                </div>
+                <h3 class="text-xl font-bold font-heading text-white">📈 Investimentos Quânticos</h3>
+                <p class="text-gray-300 text-sm leading-relaxed">
+                  Algoritmos preditivos que compram renda fixa e variada nos momentos exatos de pico! 🚀
+                </p>
+              </div>
 
-            {/* Ambient Glow Aura */}
-            <div className="absolute inset-0 bg-radial from-gold-champagne/[0.02] to-transparent blur-3xl" />
+            </div>
+
           </div>
-        </motion.div>
+        </section>
+
+        <!-- DEMO SIMULADOR IA SECTION -->
+        <section id="ai-demo" class="py-24 bg-purple-950/30 border-t border-purple-500/20">
+          <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="ai-glass-panel p-8 sm:p-12 rounded-3xl border-2 border-purple-500/40 space-y-8 shadow-2xl">
+              <div class="text-center space-y-3">
+                <div class="inline-flex items-center space-x-2 px-4 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-xs font-mono">
+                  <Bot class="w-4 h-4" />
+                  <span>SIMULADOR DE RESPOSTAS DA IA THALLIUM</span>
+                </div>
+                <h2 class="text-3xl font-black font-heading text-white">
+                  Pergunte Qualquer Coisa para a Nossa <span class="ai-gradient-text">IA Financeira</span> 🤖✨
+                </h2>
+                <p class="text-xs text-gray-300">
+                  Experimente o poder dos nossos robôs generativos com respostas 100% repletas de emojis e promessas disruptivas!
+                </p>
+              </div>
+
+              <form onSubmit={handleSimulateAi} class="space-y-4">
+                <div>
+                  <input 
+                    type="text" 
+                    value={aiPrompt}
+                    onChange={(e) => setAiPrompt(e.target.value)}
+                    placeholder="Ex: Como posso multiplicar meu dinheiro hoje com IA?" 
+                    class="w-full bg-black/60 border border-purple-500/40 rounded-2xl px-6 py-4 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-pink-500"
+                  />
+                </div>
+                <button type="submit" disabled={isAnalyzing} class="ai-btn-primary w-full py-4 rounded-2xl font-extrabold text-sm flex items-center justify-center space-x-2">
+                  <span>{isAnalyzing ? '🤖 PROCESSANDO NEURÔNIOS IA...' : '🚀 GERAR RESPOSTA DISRUPTIVA'}</span>
+                  <Sparkles class="w-4 h-4" />
+                </button>
+              </form>
+
+              {aiResponse && (
+                <div class="p-6 rounded-2xl bg-purple-950/80 border border-pink-500/50 text-sm text-pink-200 space-y-2 animate-fadeIn font-mono">
+                  <p>{aiResponse}</p>
+                </div>
+              )}
+            </div>
+
+          </div>
+        </section>
 
       </main>
 
-      {/* Infinite Horizontal Marquee (Full Screen Width) */}
-      <section className="w-full border-y border-white/[0.05] bg-black-card/30 backdrop-blur-xs overflow-hidden py-5 select-none relative z-10 max-w-none">
-        <div className="flex whitespace-nowrap overflow-hidden">
-          <motion.div 
-            animate={{ x: [0, -1000] }}
-            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-            className="flex items-center space-x-12 pr-12 text-[10px] font-mono tracking-[0.25em] text-silver-metallic/60 font-semibold uppercase"
-          >
-            <span>THALLIUM LEDGER</span>
-            <span className="text-gold-champagne">●</span>
-            <span>CONFIANÇA MATEMÁTICA</span>
-            <span className="text-gold-champagne">●</span>
-            <span>ELEMENTO ATÔMICO 81</span>
-            <span className="text-gold-champagne">●</span>
-            <span>LIQUIDEZ OPERACIONAL ABSOLUTA</span>
-            <span className="text-gold-champagne">●</span>
-            <span>AUDITORIA IMUTÁVEL RLS</span>
-            <span className="text-gold-champagne">●</span>
-            <span>TECNOLOGIA DE CONTABILIDADE SISTÊMICA</span>
-            <span className="text-gold-champagne">●</span>
-            
-            {/* Duplicate for seamless looping */}
-            <span>THALLIUM LEDGER</span>
-            <span className="text-gold-champagne">●</span>
-            <span>CONFIANÇA MATEMÁTICA</span>
-            <span className="text-gold-champagne">●</span>
-            <span>ELEMENTO ATÔMICO 81</span>
-            <span className="text-gold-champagne">●</span>
-            <span>LIQUIDEZ OPERACIONAL ABSOLUTA</span>
-            <span className="text-gold-champagne">●</span>
-            <span>AUDITORIA IMUTÁVEL RLS</span>
-            <span className="text-gold-champagne">●</span>
-            <span>TECNOLOGIA DE CONTABILIDADE SISTÊMICA</span>
-            <span className="text-gold-champagne">●</span>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Edge-to-Edge Technical Protocol Rows (Portfolio Layout) */}
-      <section className="w-full px-6 md:px-16 lg:px-24 py-28 relative z-10 max-w-none">
-        <div className="section-header mb-16 text-left">
-          <p className="text-[10px] tracking-[0.2em] font-mono text-gold-champagne uppercase">{"// ESPECIFICAÇÕES DO PROTOCOLO"}</p>
-          <h2 className="font-display text-3xl md:text-5xl font-extrabold text-warm-white tracking-tight mt-3">
-            Engenharia de Ledger Sistemática
-          </h2>
-        </div>
-
-        <div className="flex flex-col border-t border-white/[0.08] w-full">
-          {[
-            {
-              num: "01",
-              title: "CONCORDÂNCIA DE ENTRADA DUPLA",
-              desc: "Isolamento contábil serializável que previne inconsistências transacionais e assegura saldo de liquidez sob concorrência paralela extrema."
-            },
-            {
-              num: "02",
-              title: "POLÍTICAS DE SEGURANÇA NO BANCO",
-              desc: "Controle de acesso granular baseado em Row-Level Security (RLS) diretamente no motor PostgreSQL para isolamento completo de identidades."
-            },
-            {
-              num: "03",
-              title: "LANÇAMENTOS IMUTÁVEIS E AUDITORIA",
-              desc: "Logs sequenciais de auditoria acionados por triggers nativos de banco de dados, registrando todas as movimentações e acessos sensíveis."
-            },
-            {
-              num: "04",
-              title: "RENDIMENTO DE LIQUIDEZ CORRENTE",
-              desc: "Yield diário progressivo sobre títulos públicos CDB, LCI e Tesouro, com resgate e amortização contábil sob demanda imediata."
-            }
-          ].map((spec, i) => (
-            <motion.div 
-              key={i}
-              whileHover={{ x: 12 }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
-              className="group border-b border-white/[0.06] py-8 flex flex-col md:flex-row md:items-start justify-between gap-4 cursor-pointer w-full"
-            >
-              <div className="flex items-center space-x-6 md:w-1/2">
-                <span className="font-display text-2xl md:text-3xl font-extrabold text-gold-champagne/25 group-hover:text-gold-champagne transition-colors duration-300">
-                  {spec.num}
-                </span>
-                <h3 className="font-display text-base md:text-lg font-bold text-warm-white group-hover:text-gold-champagne transition-colors duration-300 tracking-wider">
-                  {spec.title}
-                </h3>
-              </div>
-              <p className="font-sans text-sm text-silver-metallic/65 max-w-xl leading-relaxed group-hover:text-warm-white transition-colors duration-300 md:w-1/2 font-light">
-                {spec.desc}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Edge-to-Edge Bento Grid Section */}
-      <section className="w-full px-6 md:px-16 lg:px-24 py-12 relative z-10 max-w-none">
-        <div className="section-header mb-16 text-left">
-          <p className="text-[10px] tracking-[0.2em] font-mono text-gold-champagne uppercase">{"// RECURSOS OPERACIONAIS"}</p>
-          <h2 className="font-display text-3xl md:text-5xl font-extrabold text-warm-white tracking-tight mt-3">
-            Interface de Consistência
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-left w-full">
-          {/* Card 1 */}
-          <motion.div 
-            whileHover={{ y: -6, scale: 1.01, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
-            whileTap={{ scale: 0.99 }}
-            className="p-[1.5px] rounded-3xl bg-gradient-to-b from-gold-deep/20 via-black-elevated to-black-elevated md:col-span-2 shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
-          >
-            <div className="p-8 rounded-[23px] border border-black-elevated bg-black-card/85 backdrop-blur-md flex flex-col justify-between min-h-[240px] h-full">
-              <div className="w-12 h-12 rounded-2xl bg-[#09090b] flex items-center justify-center border border-gold-deep/20 text-gold-champagne shadow-[0_4px_12px_rgba(212,175,106,0.1)]">
-                <Cpu className="w-5 h-5" />
-              </div>
-              <div className="mt-6">
-                <h3 className="font-display text-lg font-bold text-warm-white mb-2">Razão Contábil Atômico</h3>
-                <p className="font-sans text-sm text-silver-metallic/70 leading-relaxed font-light">
-                  Operações protegidas por consistência transacional profunda a nível de banco de dados. Salvaguarda absoluta contra concorrência e falhas de liquidação.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 2 */}
-          <motion.div 
-            whileHover={{ y: -6, scale: 1.01, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
-            whileTap={{ scale: 0.99 }}
-            className="p-[1.5px] rounded-3xl bg-gradient-to-b from-gold-deep/20 via-black-elevated to-black-elevated shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
-          >
-            <div className="p-8 rounded-[23px] border border-black-elevated bg-black-card/85 backdrop-blur-md flex flex-col justify-between min-h-[240px] h-full">
-              <div className="w-12 h-12 rounded-2xl bg-[#09090b] flex items-center justify-center border border-gold-deep/20 text-gold-champagne shadow-[0_4px_12px_rgba(212,175,106,0.1)]">
-                <ShieldCheck className="w-5 h-5" />
-              </div>
-              <div className="mt-6">
-                <h3 className="font-display text-lg font-bold text-warm-white mb-2">Auditoria e Segurança</h3>
-                <p className="font-sans text-sm text-silver-metallic/70 leading-relaxed font-light">
-                  Histórico de auditoria imutável integrado. Cada operação gera logs sequenciais auditáveis e políticas rígidas de acesso (RLS).
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 3 */}
-          <motion.div 
-            whileHover={{ y: -6, scale: 1.01, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
-            whileTap={{ scale: 0.99 }}
-            className="p-[1.5px] rounded-3xl bg-gradient-to-b from-gold-deep/20 via-black-elevated to-black-elevated shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
-          >
-            <div className="p-8 rounded-[23px] border border-black-elevated bg-black-card/85 backdrop-blur-md flex flex-col justify-between min-h-[240px] h-full">
-              <div className="w-12 h-12 rounded-2xl bg-[#09090b] flex items-center justify-center border border-gold-deep/20 text-gold-champagne shadow-[0_4px_12px_rgba(212,175,106,0.1)]">
-                <CreditCard className="w-5 h-5" />
-              </div>
-              <div className="mt-6">
-                <h3 className="font-display text-lg font-bold text-warm-white mb-2">Gestão de Crédito</h3>
-                <p className="font-sans text-sm text-silver-metallic/70 leading-relaxed font-light">
-                  Configuração de cartões virtuais, limite flexível e fechamento de fatura integrado às rotinas de débito direto.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 4 */}
-          <motion.div 
-            whileHover={{ y: -6, scale: 1.01, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
-            whileTap={{ scale: 0.99 }}
-            className="p-[1.5px] rounded-3xl bg-gradient-to-b from-gold-deep/20 via-black-elevated to-black-elevated shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
-          >
-            <div className="p-8 rounded-[23px] border border-black-elevated bg-black-card/85 backdrop-blur-md flex flex-col justify-between min-h-[240px] h-full">
-              <div className="w-12 h-12 rounded-2xl bg-[#09090b] flex items-center justify-center border border-gold-deep/20 text-gold-champagne shadow-[0_4px_12px_rgba(212,175,106,0.1)]">
-                <Landmark className="w-5 h-5" />
-              </div>
-              <div className="mt-6">
-                <h3 className="font-display text-lg font-bold text-warm-white mb-2">Mesa de Investimento</h3>
-                <p className="font-sans text-sm text-silver-metallic/70 leading-relaxed font-light">
-                  Aplicações automáticas em títulos prefixados com taxas calculadas dinamicamente a cada fração de dia corrido.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Card 5 */}
-          <motion.div 
-            whileHover={{ y: -6, scale: 1.01, transition: { type: 'spring', stiffness: 300, damping: 20 } }}
-            whileTap={{ scale: 0.99 }}
-            className="p-[1.5px] rounded-3xl bg-gradient-to-b from-gold-deep/20 via-black-elevated to-black-elevated md:col-span-3 shadow-[0_12px_32px_rgba(0,0,0,0.5)]"
-          >
-            <div className="p-8 rounded-[23px] border border-black-elevated bg-black-card/85 backdrop-blur-md flex flex-col justify-between min-h-[240px] h-full">
-              <div className="w-12 h-12 rounded-2xl bg-[#09090b] flex items-center justify-center border border-gold-deep/20 text-gold-champagne shadow-[0_4px_12px_rgba(212,175,106,0.1)]">
-                <span className="font-display font-extrabold text-sm tracking-wide">PIX</span>
-              </div>
-              <div className="mt-6">
-                <h3 className="font-display text-lg font-bold text-warm-white mb-2">Liquidação Instantânea</h3>
-                <p className="font-sans text-sm text-silver-metallic/70 leading-relaxed font-light">
-                  Transferências instantâneas Pix baseadas em chaves. Processamento assíncrono seguro com verificação de PIN de transação para controle operacional.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Cinematic Call to Action - Cleaned up to be full-width and borderless (Removed Card Box container) */}
-      <section className="w-full px-6 md:px-16 lg:px-24 py-36 relative z-10 text-center flex flex-col items-center justify-center border-t border-white/[0.05] bg-gradient-to-b from-transparent via-[#0f0f11]/30 to-[#0e0e10]/80 max-w-none">
-        <h2 className="font-display text-3xl md:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-warm-white via-gold-champagne to-warm-white mb-6">
-          Pronto para evoluir sua gestão?
-        </h2>
-        <p className="font-sans text-base text-silver-metallic/80 max-w-lg mb-10 leading-relaxed font-light">
-          Abra sua conta digital Thallium hoje e tenha controle absoluto sob um livro-razão de contabilidade à prova de falhas.
-        </p>
-        <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
-          <Link 
-            href="/cadastro" 
-            className="inline-flex items-center justify-center space-x-2.5 text-xs font-bold tracking-widest uppercase py-4.5 px-9 rounded-full bg-gradient-to-r from-gold-deep via-gold-champagne to-gold-deep text-black-pure shadow-[0_4px_25px_rgba(212,175,106,0.25)] hover:brightness-110 hover:shadow-[0_4px_30px_rgba(212,175,106,0.35)] transition-all select-none"
-          >
-            <span>Criar Conta Agora</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
-        </motion.div>
-      </section>
-
-      {/* Edge-to-Edge Footer */}
-      <footer className="border-t border-black-elevated bg-black-pure py-12 text-center text-xs text-silver-metallic/60 font-mono relative z-10 max-w-none w-full px-6 md:px-16 lg:px-24">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 w-full">
-          <span>&copy; {new Date().getFullYear()} THALLIUM INC. TODOS OS DIREITOS RESERVADOS.</span>
-          <div className="flex space-x-6">
-            <span className="hover:text-gold-champagne cursor-pointer transition-colors duration-200">TERMOS</span>
-            <span className="hover:text-gold-champagne cursor-pointer transition-colors duration-200">PRIVACIDADE</span>
-            <span className="hover:text-gold-champagne transition-colors duration-200 flex items-center gap-1.5 select-none">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              LEDGER STATUS: ONLINE
-            </span>
+      <!-- Footer -->
+      <footer class="bg-[#05030b] border-t border-purple-500/20 py-12 text-gray-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+          <div class="flex items-center justify-center space-x-2 text-white font-bold text-lg font-heading">
+            <Bot class="w-5 h-5 text-purple-400" />
+            <span>Thallium AI 🚀</span>
           </div>
+          <p>© 2026 <strong>Thallium AI Generic Slop Edition Inc.</strong> Todos os direitos reservados com muito gradiente roxo e inteligência artificial! ✨🔮</p>
         </div>
       </footer>
+
     </div>
   );
 }

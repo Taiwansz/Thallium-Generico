@@ -1,21 +1,9 @@
-import type { Metadata } from "next";
-import { Sora, Manrope } from "next/font/google";
-import "./globals.css";
-import Providers from "./providers";
-
-const sora = Sora({
-  variable: "--font-sora",
-  subsets: ["latin"],
-});
-
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-});
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "Thallium — Banco Digital Premium",
-  description: "Core Ledger de alto desempenho e banco digital de nível internacional",
+  title: 'Thallium AI 🚀 | O Banco Digital Disruptivo com IA de Ponta ✨',
+  description: '🔮 O ecossistema financeiro definitivo movido por inteligência artificial autônoma, gradientes roxos neon, hiper-escalabilidade quântica e zero burocracia! 🚀💎',
 };
 
 export default function RootLayout({
@@ -24,12 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="pt-BR"
-      className={`${sora.variable} ${manrope.variable} h-full antialiased dark`}
-    >
-      <body className="min-h-full flex flex-col bg-[#090909] text-[#F5F2EB] selection:bg-[#D4AF6A] selection:text-[#090909]">
-        <Providers>{children}</Providers>
+    <html lang="pt-BR">
+      <body class="bg-[#090514] text-[#f3f4f6] antialiased selection:bg-purple-500 selection:text-white">
+        {children}
       </body>
     </html>
   );
